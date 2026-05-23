@@ -1,42 +1,28 @@
-import { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import './ProductCard.css'
 
-export default function ProductCard({ product, delay, onExternalOrder }) {
+export default function ProductCard({ product, delay, onOrder }) {
   const { add } = useCart()
-  const [added, setAdded] = useState(false)
-
-  const isExternal = product.source === 'external'
 
   const handleAction = () => {
-    if (isExternal) {
-      onExternalOrder?.(product)
+    if (product.source === 'external') {
+      onOrder?.(product)
     } else {
-      add(product)
-      setAdded(true)
-      setTimeout(() => setAdded(false), 1600)
+      onOrder?.(product)
     }
   }
 
   return (
     <div className={`product-card fade-in delay-${delay}`}>
-      <div
-        className="product-img-wrap"
-        onClick={isExternal ? () => onExternalOrder?.(product) : undefined}
-        style={isExternal ? { cursor: 'pointer' } : {}}
-      >
+      <div className="product-img-wrap" onClick={handleAction}>
         <img src={product.image} alt={product.name} loading="lazy" />
         {product.tag && (
           <span className={`product-tag ${product.tag === 'Promo' ? 'tag-promo' : 'tag-new'}`}>
             {product.tag}
           </span>
         )}
-        <button
-          className={`quick-add${added ? ' added' : ''}`}
-          onClick={handleAction}
-          aria-label={isExternal ? 'Commander' : 'Ajouter au panier'}
-        >
-          {isExternal ? 'Commander' : added ? '✓ Ajouté' : '+ Panier'}
+        <button className="quick-add" onClick={handleAction} aria-label="Commander">
+          Commander
         </button>
       </div>
       <div className="product-info">

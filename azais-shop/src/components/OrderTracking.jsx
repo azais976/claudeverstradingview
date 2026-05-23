@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import './OrderTracking.css'
-import { products } from '../data/products'
-
-const DEMO_ORDERS = {
-  'AZS-1001': { productId: 13, status: 3, date: '2025-05-18', carrier: 'Colissimo', trackingNum: '6A12345678901' },
-  'AZS-1002': { productId: 32, status: 2, date: '2025-05-20', carrier: 'DHL', trackingNum: 'JD014600004714390988' },
-  'AZS-1003': { productId: 24, status: 4, date: '2025-05-14', carrier: 'Chronopost', trackingNum: 'XK998471002FR' },
-  'AZS-1004': { productId: 3, status: 1, date: '2025-05-22', carrier: 'Colissimo', trackingNum: null },
-}
 
 const STEPS = [
-  { label: 'Commande reçue', icon: '📋' },
-  { label: 'En préparation', icon: '📦' },
-  { label: 'Expédiée', icon: '🚚' },
-  { label: 'En livraison', icon: '🏠' },
-  { label: 'Livrée', icon: '✅' },
+  { label: 'Commande reçue',  icon: '📋' },
+  { label: 'En préparation',  icon: '📦' },
+  { label: 'Expédiée',        icon: '🚚' },
+  { label: 'En livraison',    icon: '🏠' },
+  { label: 'Livrée',          icon: '✅' },
 ]
+
+function loadOrder(id) {
+  try {
+    const saved = JSON.parse(localStorage.getItem('azais_orders') || '[]')
+    return saved.find(o => o.id === id.toUpperCase()) || null
+  } catch { return null }
+}
 
 export default function OrderTracking({ open, onClose }) {
   const [input, setInput] = useState('')
@@ -25,10 +24,13 @@ export default function OrderTracking({ open, onClose }) {
   const search = () => {
     const key = input.trim().toUpperCase()
     if (!key) { setError('Entrez un numéro de commande.'); return }
-    const found = DEMO_ORDERS[key]
-    if (!found) { setError('Commande introuvable. Vérifiez le numéro reçu par email.'); setOrder(null); return }
-    const product = products.find(p => p.id === found.productId)
-    setOrder({ ...found, product })
+    const found = loadOrder(key)
+    if (!found) {
+      setError('Commande introuvable. Vérifiez le numéro reçu dans votre email de confirmation.')
+      setOrder(null)
+      return
+    }
+    setOrder(found)
     setError('')
   }
 
@@ -39,10 +41,11 @@ export default function OrderTracking({ open, onClose }) {
   return (
     <div className="tracking-backdrop" onClick={onClose}>
       <div className="tracking-modal" onClick={e => e.stopPropagation()}>
+
         <div className="tracking-header">
           <div>
             <h3>Suivi de commande</h3>
-            <p>Entrez votre numéro de commande (ex: AZS-1001)</p>
+            <p>Entrez le numéro reçu dans votre email de confirmation</p>
           </div>
           <button className="tracking-close" onClick={onClose}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -69,16 +72,17 @@ export default function OrderTracking({ open, onClose }) {
           <div className="tracking-result">
             <div className="tracking-product">
               <div className="tracking-product-img">
-                <img src={order.product?.image} alt={order.product?.name} />
+                <img src={order.productImage} alt={order.productName} />
               </div>
               <div className="tracking-product-info">
-                <p className="tracking-order-num">Commande #{input.toUpperCase()}</p>
-                <h4>{order.product?.name}</h4>
+                <p className="tracking-order-num">Commande #{order.id}</p>
+                <h4>{order.productName}</h4>
+                {order.size && <p className="tracking-date">Taille : {order.size} · Qté : {order.qty}</p>}
                 <p className="tracking-date">Commandé le {order.date}</p>
                 {order.trackingNum && (
                   <p className="tracking-num">N° de suivi : <strong>{order.trackingNum}</strong></p>
                 )}
-                <p className="tracking-carrier">Transporteur : {order.carrier}</p>
+                <p className="tracking-carrier">Transporteur : {order.carrier || 'En attente d\'assignation'}</p>
               </div>
             </div>
 
@@ -92,9 +96,15 @@ export default function OrderTracking({ open, onClose }) {
               ))}
             </div>
 
-            <div className={`tracking-status-badge status-${order.status}`}>
+            <div className="tracking-status-badge">
               {STEPS[order.status].icon} {STEPS[order.status].label}
             </div>
+
+            {order.customer && (
+              <p className="tracking-delivered-to">
+                Livraison chez : {order.customer.firstName} {order.customer.lastName} — {order.customer.city}
+              </p>
+            )}
 
             <button className="tracking-reset" onClick={reset}>← Chercher une autre commande</button>
           </div>

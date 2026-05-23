@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { products, categories } from '../data/products'
 import ProductCard from './ProductCard'
-import ExternalOrderModal from './ExternalOrderModal'
+import Checkout from './Checkout'
 import './Products.css'
 
 export default function Products() {
-  const [externalProduct, setExternalProduct] = useState(null)
+  const [checkoutProduct, setCheckoutProduct] = useState(null)
 
   return (
     <>
@@ -21,14 +21,13 @@ export default function Products() {
                 </div>
                 <span className="product-count">{catProducts.length} articles</span>
               </div>
-
               <div className="products-grid">
                 {catProducts.map((p, i) => (
                   <ProductCard
                     key={p.id}
                     product={p}
                     delay={(i % 4) + 1}
-                    onExternalOrder={setExternalProduct}
+                    onOrder={setCheckoutProduct}
                   />
                 ))}
               </div>
@@ -37,10 +36,10 @@ export default function Products() {
         })}
       </section>
 
-      <ExternalOrderModal
-        open={!!externalProduct}
-        product={externalProduct}
-        onClose={() => setExternalProduct(null)}
+      <Checkout
+        open={!!checkoutProduct}
+        product={checkoutProduct}
+        onClose={() => setCheckoutProduct(null)}
       />
     </>
   )
