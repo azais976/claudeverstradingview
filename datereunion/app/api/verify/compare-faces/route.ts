@@ -2,6 +2,7 @@
  * API Route: POST /api/verify/compare-faces
  * Compare two face images using AWS Rekognition.
  * This runs SERVER-SIDE to keep AWS credentials secret.
+ * AWS SDK is an optional dependency — install with: npm i @aws-sdk/client-rekognition
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -32,19 +33,25 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Use AWS Rekognition CompareFaces
-    // Dynamically import AWS SDK to avoid bundle issues
-    const { RekognitionClient, CompareFacesCommand } = await import("@aws-sdk/client-rekognition");
+    // Attempt to load AWS SDK — must be installed separately
+    // npm install @aws-sdk/client-rekognition
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { RekognitionClient, CompareFacesCommand } = require("@aws-sdk/client-rekognition") as {
+      RekognitionClient: new (config: { region: string; credentials: { accessKeyId: string; secretAccessKey: string } }) => {
+        send: (cmd: unknown) => Promise<{ FaceMatches?: { Similarity?: number }[] }>;
+      };
+      CompareFacesCommand: new (input: {
+        SourceImage: { Bytes: Buffer };
+        TargetImage: { Bytes: Buffer };
+        SimilarityThreshold: number;
+      }) => unknown;
+    };
 
     const client = new RekognitionClient({
       region: awsRegion,
-      credentials: {
-        accessKeyId: awsAccessKey,
-        secretAccessKey: awsSecretKey,
-      },
+      credentials: { accessKeyId: awsAccessKey, secretAccessKey: awsSecretKey },
     });
 
-    // Convert base64 to bytes
     const selfieBytes  = Buffer.from(selfie.replace(/^data:image\/\w+;base64,/, ""), "base64");
     const idPhotoBytes = Buffer.from(idPhoto.replace(/^data:image\/\w+;base64,/, ""), "base64");
 
@@ -55,12 +62,10 @@ export async function POST(request: NextRequest) {
     });
 
     const response = await client.send(command);
-
-    // Get highest similarity match
     const similarity = response.FaceMatches?.[0]?.Similarity ?? 0;
 
     return NextResponse.json({
-      similarity: similarity / 100, // Normalize to 0-1
+      similarity: similarity / 100,
       matchCount: response.FaceMatches?.length ?? 0,
     });
   } catch (err) {

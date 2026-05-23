@@ -2,7 +2,7 @@
 
 export type Gender = 'homme' | 'femme' | 'non-binaire' | 'autre';
 export type DateMode = '1v1' | '2v2' | '3v3' | 'groupe' | 'amis';
-export type EventType = 'restaurant' | 'randonnee' | 'plage' | 'sport' | 'culture' | 'soiree' | 'autre';
+export type EventType = 'restaurant' | 'randonnee' | 'plage' | 'sport' | 'culture' | 'soiree' | 'soiree_villa' | 'autre';
 export type SwipeAction = 'like' | 'dislike' | 'super-like';
 export type MessageType = 'text' | 'image' | 'event' | 'system';
 export type ConversationType = '1v1' | 'group';
@@ -153,6 +153,13 @@ export interface EncryptedMessage {
   ephemeralPublicKey?: string; // base64, for DH key exchange
 }
 
+// Alias used by useMessages
+export interface EncryptedPayload {
+  ciphertext: string;
+  iv: string;
+  ephemeralPublicKey: string;
+}
+
 // ─── Events / Dates ──────────────────────────────────────────────────────────
 
 export interface DateEvent {
@@ -175,6 +182,13 @@ export interface DateEvent {
   is_public: boolean;
   is_verified_only: boolean;
   conversation_id: string | null;
+  // Soirée villa fields
+  ticket_price: number | null;
+  dress_code: string | null;
+  theme: string | null;
+  amenities: string[];
+  address_hidden: boolean;
+  full_address: string | null;
   created_at: string;
   updated_at: string;
   // Joined

@@ -282,9 +282,9 @@ export default function EventDetailPage() {
         {/* Organizer */}
         <div className="flex items-center gap-3 p-4 rounded-2xl bg-muted/50">
           <div className="w-11 h-11 rounded-full overflow-hidden bg-muted flex-shrink-0">
-            {(event.creator as {profile_photos?: {url: string}[]})?.profile_photos?.[0]?.url ? (
+            {((event.creator as unknown as {profile_photos?: {url: string}[]})?.profile_photos?.[0]?.url) ? (
               <Image
-                src={(event.creator as {profile_photos: {url: string}[]}).profile_photos[0].url}
+                src={(event.creator as unknown as {profile_photos: {url: string}[]}).profile_photos[0].url}
                 alt=""
                 width={44} height={44}
                 className="object-cover w-full h-full"
