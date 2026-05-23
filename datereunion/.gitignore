@@ -1,5 +1,9 @@
 .vercel
 .next
+out
 node_modules
 *.env.local
+android/local.properties
+android/*.jks
+ios/App/Pods
 

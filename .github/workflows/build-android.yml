@@ -1,0 +1,77 @@
+name: Build Android AAB (Play Store)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "datereunion/android/**"
+      - "datereunion/capacitor.config.ts"
+      - "datereunion/package.json"
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: datereunion
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: datereunion/package-lock.json
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Capacitor (no local build needed — app loads from Vercel)
+        run: npx cap sync android
+
+      - name: Create release keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/datereunion-release.jks
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+      - name: Add signing config to gradle.properties
+        run: |
+          echo "RELEASE_STORE_FILE=datereunion-release.jks"         >> android/gradle.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/gradle.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/gradle.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.ANDROID_KEY_PASSWORD }}"        >> android/gradle.properties
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
+      - name: Build Release AAB
+        run: |
+          cd android
+          ./gradlew bundleRelease --no-daemon
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: datereunion-${{ github.sha }}.aab
+          path: datereunion/android/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      # Uncomment after setting up GOOGLE_PLAY_SERVICE_ACCOUNT secret:
+      # - name: Publish to Play Store (Internal Testing)
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+      #     packageName: com.datereunion.app
+      #     releaseFiles: datereunion/android/app/build/outputs/bundle/release/app-release.aab
+      #     track: internal
+      #     status: draft
