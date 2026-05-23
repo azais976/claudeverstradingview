@@ -21,9 +21,17 @@ export const products = [
   { id: 10, name: 'Bonnet Laine Doux', category: 'couvre-chef', price: 29, originalPrice: null, image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&q=80', tag: 'Nouveau' },
   { id: 11, name: 'Bucket Hat Coton', category: 'couvre-chef', price: 39, originalPrice: 49, image: 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=500&q=80', tag: 'Promo' },
   { id: 12, name: 'Chapeau Paille', category: 'couvre-chef', price: 45, originalPrice: null, image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&q=80', tag: null },
-  // Chaussures
-  { id: 13, name: 'Sneaker Blanc', category: 'chaussures', price: 119, originalPrice: null, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80', tag: 'Nouveau' },
-  { id: 14, name: 'Boot Chelsea Noir', category: 'chaussures', price: 149, originalPrice: 189, image: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&q=80', tag: 'Promo' },
-  { id: 15, name: 'Mocassin Cuir', category: 'chaussures', price: 99, originalPrice: null, image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=500&q=80', tag: null },
-  { id: 16, name: 'Runner Technique', category: 'chaussures', price: 135, originalPrice: null, image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&q=80', tag: null },
+  // Chaussures — collection Nike Air TN via airtn.fr
+  { id: 13, name: 'Nike Air TN Triple Black', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 14, name: 'Nike Air TN Triple White', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1584735175315-9d5df23be620?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 15, name: 'Nike Air TN University Red', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80&sat=-100&hue=0', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 16, name: 'Nike Air TN Photo Blue', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 17, name: 'Nike Air TN Volt Black', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 18, name: 'Nike Air TN University Gold', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 19, name: 'Nike Air TN Hyper Blue', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 20, name: 'Nike Air TN Persian Violet', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 21, name: 'Nike Air TN Infrared', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 22, name: 'Nike Air TN OG Black/Lime', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 23, name: 'Nike Air TN SE Camo', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
+  { id: 24, name: 'Nike Air TN Plus White Red', category: 'chaussures', price: null, originalPrice: null, image: 'https://images.unsplash.com/photo-1584735175315-9d5df23be620?w=500&q=80', tag: 'Airtn.fr', source: 'airtn', orderUrl: 'https://www.airtn.fr/' },
 ]
