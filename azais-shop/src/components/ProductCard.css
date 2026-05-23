@@ -106,32 +106,3 @@
   color: #aaa;
   text-decoration: line-through;
 }
-
-.tag-airtn {
-  background: #f59e0b;
-  color: white;
-}
-
-.quick-add.airtn {
-  background: #111;
-  color: white;
-}
-
-.quick-add.airtn:hover {
-  background: #333;
-}
-
-.airtn-price {
-  font-size: 13px;
-  color: #888;
-  font-style: italic;
-  font-weight: 400;
-}
-
-.airtn-source {
-  font-size: 11px;
-  color: #f59e0b;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  margin-top: 4px;
-}

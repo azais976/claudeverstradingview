@@ -21,17 +21,7 @@ export default function Products() {
                 </div>
                 <span className="product-count">{catProducts.length} articles</span>
               </div>
-              {cat.id === 'chaussures' && (
-                <div className="airtn-banner fade-in">
-                  <div className="airtn-banner-left">
-                    <span className="airtn-badge">Partenaire</span>
-                    <p>Collection Nike Air TN disponible via <strong>airtn.fr</strong> — cliquez sur une paire pour commander</p>
-                  </div>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round">
-                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                  </svg>
-                </div>
-              )}
+
               <div className="products-grid">
                 {catProducts.map((p, i) => (
                   <ProductCard
