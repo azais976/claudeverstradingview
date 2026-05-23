@@ -119,3 +119,60 @@
 @media (max-width: 480px) {
   .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
+
+.gender-section {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.gender-group {}
+
+.gender-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 20px;
+}
+
+.gender-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.gender-dot.homme { background: #3b82f6; }
+.gender-dot.femme { background: #ec4899; }
+
+.categories-grid-small {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cat-gender-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 100px;
+  padding: 3px 8px;
+  color: white;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .gender-section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Categories from './components/Categories'
@@ -6,6 +6,7 @@ import Products from './components/Products'
 import Banner from './components/Banner'
 import Footer from './components/Footer'
 import Cart from './components/Cart'
+import OrderTracking from './components/OrderTracking'
 import { CartProvider } from './context/CartContext'
 import './App.css'
 
@@ -22,11 +23,14 @@ function ScrollAnimator() {
 }
 
 export default function App() {
+  const [trackingOpen, setTrackingOpen] = useState(false)
+
   return (
     <CartProvider>
       <ScrollAnimator />
-      <Navbar />
+      <Navbar onTrackingOpen={() => setTrackingOpen(true)} />
       <Cart />
+      <OrderTracking open={trackingOpen} onClose={() => setTrackingOpen(false)} />
       <main>
         <Hero />
         <Categories />
