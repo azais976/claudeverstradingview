@@ -1,0 +1,121 @@
+.categories-section {
+  padding: 80px 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  color: #111;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.cat-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background: #f0f0f0;
+}
+
+.cat-img {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cat-card:hover .cat-img {
+  transform: scale(1.07);
+}
+
+.cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 28px;
+  text-align: left;
+  color: white;
+  transition: background 0.3s;
+}
+
+.cat-card:hover .cat-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+}
+
+.cat-overlay h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.cat-overlay p {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.cat-cta {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.3);
+  transform: translateY(4px);
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.cat-card:hover .cat-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .categories-section { padding: 60px 20px; }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .cat-card { aspect-ratio: 3/4; }
+  .cat-overlay { padding: 20px; }
+  .cat-overlay h3 { font-size: 18px; }
+  .cat-cta { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
